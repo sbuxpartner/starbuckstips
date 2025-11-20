@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Partner {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map("partners")
+}
+
+model Distribution {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now()) @db.Timestamptz
+  totalAmount Float    @map("total_amount")
+  totalHours  Float    @map("total_hours")
+  hourlyRate  Float    @map("hourly_rate")
+  partnerData Json     @map("partner_data")
+
+  @@map("distributions")
+}
